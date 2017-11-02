@@ -1,0 +1,43 @@
+# Spring Boot configuration
+spring:
+  profiles:
+    active: production
+# Database
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/userdb?createDatabaseIfNotExist=true
+    username: root
+    password: root
+# JPA properties
+  jpa:
+    hibernate:
+      # Hibernate ddl auto (create, create-drop, update)
+      ddl-auto: update
+    # Show or not log for each sql query
+    show-sql: true
+    database: mysql
+    # The SQL dialect makes Hibernate generate better SQL for the chosen database
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+# Logging
+logging:
+  file: logs/dev_app.log
+  pattern:
+    console: "[%-5level] %date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %logger{15}#%line %msg\n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
+  level:
+    com.kaluzny: DEBUG
+    org.springframework: INFO
+    org.hibernate: INFO
+# Configure the server to run with SSL/TLS and using HTTPS
+server:
+  tomcat:
+    basedir: my-tomcat
+    accesslog:
+      enabled: true
+      #pattern: "%t %a %r %s (%D ms)"
+  port: 8443
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: tomcatadmin
+    keyStoreType: PKCS12
+    keyAlias: tomcat
